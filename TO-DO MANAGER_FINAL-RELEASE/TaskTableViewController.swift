@@ -9,7 +9,15 @@ import UIKit
 
 class TaskTableViewController: UITableViewController {
     
-    var tasks: [TaskPriority: [TaskProtocol]] = [:]
+    var tasks: [TaskPriority: [TaskProtocol]] = [:]{
+        didSet{
+            for (taskPriority, tasksGroup) in tasks{
+                tasks[taskPriority] = tasksGroup.sorted{
+                    task1, task2 in task1.taskStatus.rawValue > task2.taskStatus.rawValue
+                }
+            }
+        }
+    }
     var taskStorage = TaskStorage()
     var taskPriorityForSection: [TaskPriority] = [.important, .general]
 
@@ -104,30 +112,67 @@ class TaskTableViewController: UITableViewController {
         tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .fade)
     }
     
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let type = taskPriorityForSection[indexPath.section]
+        
+        guard let _ = tasks[type]?[indexPath.row] else{
+            return
+        }
+        
+        guard tasks[type]![indexPath.row].taskStatus == .planned else{
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
+        tasks[type]![indexPath.row].taskStatus = .finished
+        tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
     }
-    */
+    
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let type = taskPriorityForSection[indexPath.section]
+        guard let _ = tasks[type]?[indexPath.row] else{
+            return nil
+        }
+        
+        guard tasks[type]![indexPath.row].taskStatus == .finished else{
+            return nil
+        }
+        
+        let action = UIContextualAction(style: .normal, title: "Plan", handler:{
+            _,_,_ in self.tasks[type]![indexPath.row].taskStatus = .planned
+            self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+        })
+        action.backgroundColor = .systemBlue
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
 
-    /*
+    
+  
+
+    
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
         return true
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let taskTypeFrom = taskPriorityForSection[sourceIndexPath.section]
+        let taskTypeTo = taskPriorityForSection[destinationIndexPath.section]
+        
+        guard let currentTask = tasks[taskTypeFrom]?[sourceIndexPath.row] else{
+            return
+        }
+        
+        tasks[taskTypeFrom]?.remove(at: sourceIndexPath.row)
+        tasks[taskTypeTo]?.insert(currentTask, at: destinationIndexPath.row)
+        
+        if taskTypeTo != taskTypeFrom {
+            tasks[taskTypeTo]![destinationIndexPath.row].taskPriority = taskTypeTo
+        }
+        
+        tableView.reloadData()
     }
-    */
 
 }

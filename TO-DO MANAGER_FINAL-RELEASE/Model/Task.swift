@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum TaskStatus{
-    case planned
-    case finished
+enum TaskStatus: Int{
+    case planned = 1
+    case finished = 0
 }
 enum TaskPriority{
     case general
