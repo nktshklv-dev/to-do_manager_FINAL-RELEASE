@@ -95,17 +95,15 @@ class TaskTableViewController: UITableViewController {
 
  
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        let type = taskPriorityForSection[indexPath.section]
+        tasks[type]?.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .fade)
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
