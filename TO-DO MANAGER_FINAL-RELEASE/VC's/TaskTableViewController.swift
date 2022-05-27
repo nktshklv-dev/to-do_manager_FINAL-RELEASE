@@ -70,6 +70,7 @@ class TaskTableViewController: UITableViewController {
         }
         else if currentTask.taskStatus == .finished{
             cell.taskTitle.textColor = .lightGray
+            cell.taskIcon.textColor = .lightGray
         }
         return cell
         
