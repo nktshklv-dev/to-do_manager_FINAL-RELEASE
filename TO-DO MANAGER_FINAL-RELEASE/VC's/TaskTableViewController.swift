@@ -136,22 +136,50 @@ class TaskTableViewController: UITableViewController {
             return nil
         }
         
-        guard tasks[type]![indexPath.row].taskStatus == .finished else{
-            return nil
-        }
+     
         
-        let action = UIContextualAction(style: .normal, title: "Plan", handler:{
+        let actionForPlanning = UIContextualAction(style: .normal, title: "Plan", handler:{
             _,_,_ in self.tasks[type]![indexPath.row].taskStatus = .planned
             self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         })
-        action.backgroundColor = .systemBlue
-        return UISwipeActionsConfiguration(actions: [action])
+        actionForPlanning.backgroundColor = .systemBlue
+        
+        let actionForEditing = UIContextualAction(style: .normal, title: "Edit", handler:{_,_,_ in
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "edit") as! EditTaskTableViewController
+           
+            vc.taskText = self.tasks[type]![indexPath.row].taskTitle
+            vc.taskType = self.tasks[type]![indexPath.row].taskPriority
+            vc.taskStatus = self.tasks[type]![indexPath.row].taskStatus
+            vc.doAfterSaving = {
+                text, type, status in
+                let editedTask = Task(taskTitle: text, taskStatus: status, taskPriority: type)
+                self.tasks[type]![indexPath.row] = editedTask
+                
+                tableView.reloadData()
+                
+            }
+            
+            self.navigationController!.pushViewController(vc, animated: true)
+            
+        })
+        
+        actionForEditing.backgroundColor = .systemOrange
+        
+        
+      
+        var actions: [UIContextualAction] = []
+        if  tasks[type]![indexPath.row].taskStatus != .finished{   actions.append(actionForEditing)
+           
+        }
+        else{
+            actions.append(contentsOf: [actionForPlanning, actionForEditing])
+         
+        }
+        return UISwipeActionsConfiguration(actions: actions)
+        
+        
+       
     }
-    
-
-    
-  
-
     
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -174,6 +202,18 @@ class TaskTableViewController: UITableViewController {
         }
         
         tableView.reloadData()
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromTasksToEdit"{
+            let vc = segue.destination as! EditTaskTableViewController
+            vc.doAfterSaving = {
+                text, type, status in
+                self.tasks[type]?.append(Task(taskTitle: text, taskStatus: status, taskPriority: type))
+                self.tableView.reloadData()
+            }
+        }
     }
 
 }

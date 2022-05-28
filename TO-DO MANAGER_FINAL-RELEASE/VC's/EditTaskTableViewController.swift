@@ -13,6 +13,8 @@ class EditTaskTableViewController: UITableViewController {
     var taskType: TaskPriority = .important
     var taskStatus: TaskStatus = .planned
     
+    var doAfterSaving: (( String,  TaskPriority,  TaskStatus) -> Void)?
+    
     
     @IBOutlet var taskNameField: UITextField!
     @IBOutlet var taskTypeLabel: UILabel!
@@ -25,7 +27,7 @@ class EditTaskTableViewController: UITableViewController {
         taskNameField.text = taskText
         taskTypeLabel.text = taskTypeAndString[taskType]
             
-        if taskStatus == .planned{
+        if taskStatus == .finished{
             taskStatusSwitch.isOn = true
         }
     }
@@ -37,5 +39,34 @@ class EditTaskTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 3
+    }
+    
+    @IBAction func saveTaskButton(_ sender: Any) {
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tasks") as! TaskTableViewController
+        taskText = taskNameField.text ?? ""
+        taskType = (taskTypeLabel.text == "Important") ? .important : .general
+        taskStatus = taskStatusSwitch.isOn ? .finished : .planned
+        doAfterSaving!(taskText, taskType, taskStatus)
+        
+        navigationController?.popViewController(animated: true)
+        
+        
+        
+        
+        
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromEditToSelectType"{
+            let currentVC = segue.destination as! SelectTypeController
+            currentVC.selectedType = taskType
+            currentVC.doAfterSelectedType = {
+                type in self.taskType = type
+                self.taskTypeLabel.text = (type == .important) ? "Important" : "General"
+            }
+          
+            
+        }
     }
 }

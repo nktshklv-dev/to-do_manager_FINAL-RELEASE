@@ -10,7 +10,7 @@
         <!--Task Table View Controller-->
         <scene sceneID="UEc-gd-lmm">
             <objects>
-                <tableViewController id="YoG-bW-Txl" customClass="TaskTableViewController" customModule="TO_DO_MANAGER_FINAL_RELEASE" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="tasks" id="YoG-bW-Txl" customClass="TaskTableViewController" customModule="TO_DO_MANAGER_FINAL_RELEASE" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="rkK-sm-3cC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +60,7 @@
                     <navigationItem key="navigationItem" id="oN3-Dc-8cm">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="edC-gc-wa8">
                             <connections>
-                                <segue destination="69a-LN-lwV" kind="show" id="Dpk-8z-kHf"/>
+                                <segue destination="69a-LN-lwV" kind="show" identifier="fromTasksToEdit" id="Dpk-8z-kHf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -72,7 +72,7 @@
         <!--Edit Task Table View Controller-->
         <scene sceneID="igM-ui-fRT">
             <objects>
-                <tableViewController id="69a-LN-lwV" customClass="EditTaskTableViewController" customModule="TO_DO_MANAGER_FINAL_RELEASE" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="edit" id="69a-LN-lwV" customClass="EditTaskTableViewController" customModule="TO_DO_MANAGER_FINAL_RELEASE" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="6Xn-xt-YIo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -80,7 +80,7 @@
                         <sections>
                             <tableViewSection id="7S3-rQ-cZN">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Gbt-Hm-mf9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Gbt-Hm-mf9">
                                         <rect key="frame" x="0.0" y="18" width="414" height="56.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gbt-Hm-mf9" id="iYG-vx-ctY">
@@ -102,20 +102,20 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="QGr-bi-AM3">
-                                        <rect key="frame" x="0.0" y="74.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="74.5" width="414" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QGr-bi-AM3" id="gKX-xG-ivV">
-                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMM-IY-H6M">
-                                                    <rect key="frame" x="20" y="11" width="77" height="21.5"/>
+                                                    <rect key="frame" x="20" y="11" width="77" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Task Type" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4HV-q2-8DU">
-                                                    <rect key="frame" x="97" y="11" width="280.5" height="21.5"/>
+                                                    <rect key="frame" x="97" y="11" width="280.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -133,17 +133,17 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Ece-D5-u6B" kind="show" id="x6S-6M-foI"/>
+                                            <segue destination="Ece-D5-u6B" kind="show" identifier="fromEditToSelectType" id="x6S-6M-foI"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="SNt-OH-dNs">
-                                        <rect key="frame" x="0.0" y="118" width="414" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="SNt-OH-dNs">
+                                        <rect key="frame" x="0.0" y="117.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SNt-OH-dNs" id="2VF-vZ-cqu">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7VR-mp-LRZ">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7VR-mp-LRZ">
                                                     <rect key="frame" x="345" y="6.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeC-QY-2WH">
@@ -171,7 +171,13 @@
                             <outlet property="delegate" destination="69a-LN-lwV" id="oD5-P8-Lhg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="h60-Ic-XGG"/>
+                    <navigationItem key="navigationItem" id="h60-Ic-XGG">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="WLd-cP-iZY">
+                            <connections>
+                                <action selector="saveTaskButton:" destination="69a-LN-lwV" id="BNy-Cg-vIl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="taskNameField" destination="Qyo-yc-3rp" id="i6V-f3-x3H"/>
                         <outlet property="taskStatusSwitch" destination="7VR-mp-LRZ" id="bgh-mZ-pXI"/>
@@ -180,7 +186,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="987-sQ-RBn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1826" y="157"/>
+            <point key="canvasLocation" x="1804" y="157"/>
         </scene>
         <!--Select Type Controller-->
         <scene sceneID="i9u-58-ULg">
