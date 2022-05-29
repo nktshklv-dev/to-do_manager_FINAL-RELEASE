@@ -153,11 +153,11 @@ class TaskTableViewController: UITableViewController {
             vc.doAfterSaving = {
                 text, type, status in
                 let editedTask = Task(taskTitle: text, taskStatus: status, taskPriority: type)
-                self.tasks[type]![indexPath.row] = editedTask
-                
+                self.tasks[type]?.insert(editedTask, at: indexPath.row)
                 tableView.reloadData()
-                
             }
+            
+            self.tasks[type]?.remove(at: indexPath.row)
             
             self.navigationController!.pushViewController(vc, animated: true)
             
