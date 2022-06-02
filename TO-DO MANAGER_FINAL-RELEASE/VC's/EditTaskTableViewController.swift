@@ -42,7 +42,6 @@ class EditTaskTableViewController: UITableViewController {
     }
     
     @IBAction func saveTaskButton(_ sender: Any) {
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tasks") as! TaskTableViewController
         taskText = taskNameField.text ?? ""
         taskType = (taskTypeLabel.text == "Important") ? .important : .general
         taskStatus = taskStatusSwitch.isOn ? .finished : .planned

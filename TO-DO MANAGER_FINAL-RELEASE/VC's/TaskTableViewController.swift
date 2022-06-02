@@ -70,7 +70,7 @@ class TaskTableViewController: UITableViewController {
         }
         else if currentTask.taskStatus == .finished{
             cell.taskTitle.textColor = .lightGray
-            cell.taskIcon.textColor = .lightGray
+            
         }
         return cell
         
@@ -105,7 +105,7 @@ class TaskTableViewController: UITableViewController {
  
 
     
-    // Override to support editing the table view.
+     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let type = taskPriorityForSection[indexPath.section]
         tasks[type]?.remove(at: indexPath.row)
@@ -168,7 +168,8 @@ class TaskTableViewController: UITableViewController {
         
       
         var actions: [UIContextualAction] = []
-        if  tasks[type]![indexPath.row].taskStatus != .finished{   actions.append(actionForEditing)
+        if  tasks[type]![indexPath.row].taskStatus != .finished{
+            actions.append(actionForEditing)
            
         }
         else{
